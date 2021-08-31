@@ -1,0 +1,19 @@
+/* components/Upimg/Upimg.wxss */
+
+.upimg_wrap {
+  width: 90rpx;
+  height: 90rpx;
+  position: relative;
+}
+
+.upimg_wrap image {
+  width: 100%;
+  height: 100%;
+  border-radius: 15rpx;
+}
+
+.upimg_wrap icon {
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+}

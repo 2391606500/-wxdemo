@@ -1,0 +1,86 @@
+<!--pages/cart/index.wxml-->
+<!-- 收货地址 -->
+<view class="revice_address_row">
+  <!-- 当收货地址不存在时 按钮显示 对象 即使是空对象 bool类型也是true 所以 我们选取里面的一个属性-->
+  <view class="address_btn" wx:if="{{!address.userName}}">
+    <button type="primary" plain bindtap="handleChooseAddress">获取收货地址</button>
+  </view>
+  <!-- 当收货地址存在时 详细地址就显示 -->
+  <view wx:else class="user_info_row">
+    <view class="user_info">
+      <view>
+        收货人：{{address.userName}}
+      </view>
+      <view>
+        {{address.all}}
+      </view>
+    </view>
+    <view class="user_phone">
+      {{address.telNumber}}
+    </view>
+  </view>
+
+
+</view>
+<!-- 购物车内容 -->
+<view class="cart_content">
+  <view class="cart_title"> 购物车</view>
+  <!-- 当cart数组长度不为0时显示 商品信息 -->
+  <block wx:if="{{cart.length!==0}}">
+    <view class="cart_main" wx:for="{{cart}}" wx:key="goods_id">
+      <!-- 商品复选框 -->
+      <!-- <input type="checkbox" /> -->
+      <view class="cart_checkbox">
+        <checkbox-group bindchange="handlechange" data-id="{{item.goods_id}}">
+          <checkbox checked="{{item.checked}}"></checkbox>
+        </checkbox-group>
+      </view>
+      <!-- 商品图片 -->
+      <navigator class="cart_img">
+        <image src="{{item.goods_small_logo}}" mode="widthFix" />
+      </navigator>
+      <!-- 商品信息 -->
+      <view class="cart_info">
+        <view class="goods_name">{{item.goods_name}}</view>
+        <view class="goods_price_wrap">
+          <view class="goods_price">￥{{item.goods_price}}</view>
+          <view class="cart_num_tool">
+            <view class="num_edit" bindtap="handleCountchange" data-id="{{item.goods_id}}" data-operation="{{-1}}">-</view>
+            <view class="num_number">{{item.num}}</view>
+            <view class="num_edit" bindtap="handleCountchange" data-id="{{item.goods_id}}" data-operation="{{1}}">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!-- 当cart数组长度为0时显示 给出提示消息-->
+  <block wx:else class="noCart">
+    <image src="https://hbimg.huabanimg.com/0f9fcafc91fba37048f075319220261f54ae977e16686-tahVyj_fw658/format/webp" mode="widthFix" />
+
+  </block>
+
+</view>
+
+<!-- 底部工具栏 -->
+<view class="footer_tool">
+  <!-- 全选 -->
+  <view class="all_check">
+    <checkbox-group bindchange="handleallchange">
+      <checkbox checked="{{allchecked}}">全选</checkbox>
+    </checkbox-group>
+  </view>
+  <!-- 总价格 -->
+  <view class="total_price">
+    <view class="price">
+      合计：<text class="price_text">￥{{totalPrice}}</text>
+    </view>
+    <view>
+      包含运费
+    </view>
+
+  </view>
+  <!-- 结算 -->
+  <view class="order_pay" bindtap="handleToPay">
+    结算({{totalNum}})
+  </view>
+</view>
